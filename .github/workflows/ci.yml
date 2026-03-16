@@ -1,0 +1,23 @@
+name: ci
+
+on:
+  push:
+
+jobs:
+  arm64-scs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v4
+        with:
+          platforms: arm64
+
+      - name: Install Podman
+        uses: redhat-actions/podman-install@main
+
+      - name: build and run arm64-scs rootfs
+        run: |
+          ./arm64-scs.sh
